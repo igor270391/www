@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 module "webserver-cluster" {
-  source = "../../../modules/services/webserver-cluster"
+  source = "github.com/www/modules//services/webserver-cluster"
 
   cluster_name = "webservers-stage"
   db_remote_state_bucket = "stage-mysql-t-remote-state"
@@ -18,7 +18,7 @@ module "webserver-cluster" {
 # Expose an extra PORT in just the staging env for testing
 resource "aws_security_group_rule" "allow_testing_inbound" {
   type = "ingress"
-  security_group_id = aws_security_group.alb.id
+  security_group_id = module.webserver_cluster.alb_security_group_id
 
   from_port = 12345
   to_port = 122345
