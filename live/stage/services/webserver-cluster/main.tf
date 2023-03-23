@@ -3,8 +3,11 @@ provider "aws" {
 }
 
 module "webserver-cluster" {
-  source = "github.com/www/modules//services/webserver-cluster"
+  source = "github.com/www/modules//services/webserver-cluster?ref=v0.0.2"
 
+  ami = "ami-9i090j0jjwhdhw8dh"
+  server_text = "New server text"
+  
   cluster_name = "webservers-stage"
   db_remote_state_bucket = "stage-mysql-t-remote-state"
   db_remote_state_key = "stage/data-stores/mysql/terraformstate.tfstate"
@@ -12,7 +15,7 @@ module "webserver-cluster" {
   instance_type = "t2.micro"
   min_size = 2
   max_size = 2
-
+  enable_autoscaling = false
 }
 
 # Expose an extra PORT in just the staging env for testing

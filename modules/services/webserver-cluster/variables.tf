@@ -41,3 +41,27 @@ locals {
   tcp_protocol = "tcp"
   all_ips = ["0.0.0.0/0"]
 }
+
+# utilizzato in production module
+variable "custom_tags" {
+  description = "Custom tags to seton the Instance in the ASG"
+  type = map(string)
+  default = {}
+}
+
+variable "enable_autoscaling" {
+  description = "If set to true, enable autoscaling"
+  type = bool
+}
+
+variable "ami" {
+  description = "The AMI to run in the cluster"
+  type = string
+  default = "ami-jd8ewd98ew9d8e9w"
+}
+
+variable "server_text" {
+  description = "The text the web-cluster should run"
+  type = string
+  default = "Hello world"
+}

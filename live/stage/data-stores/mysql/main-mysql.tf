@@ -15,14 +15,11 @@ provider "aws" {
   region = "us-east-2"
 }
 
-resource "aws_db_instance" "mysql" {
-  identifier_prefix = "db-mysql-identifier"
-  engine = "mysql"
-  allocated_storage = 10
-  instance_class = "db.t2.micro"
-  skip_final_snapshot = true
-  db_name = "stage-mysql-t-remote-state"
+module "mysql" {
+  source = "../../../../modules/data-stores/mysql"
+ 
+  db_name = "prod_db"
+  db_username = var.db_username
+  db_password = var.db_password
 
-  username = var.db_username
-  password = var.db_password
 }
